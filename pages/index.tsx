@@ -1,10 +1,6 @@
-// pages/index.js
 import { useRouter } from 'next/router';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Head from 'next/head';
-import Image from 'next/image';
 import Layout from '../componets/layout';
-import logo_icon from '../assets/images/logo.jpg';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -38,7 +34,7 @@ const Home: NextPage = () => {
       </div> */}
       <main>
         <button className="points-system" onClick={handlePointsSystemClick}>
-          Points System
+          My $TLD coins
         </button>
         <h2>Choose The Restaurant!</h2>
         <div className="restaurant-grid">
@@ -48,12 +44,6 @@ const Home: NextPage = () => {
           <button className="restaurant-button" onClick={() => handleRestaurantClick('D')}>餐廳 D</button>
         </div>
       </main>
-
-      <footer className="bg-gray-800 text-white p-4 mt-8">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 TeleDine. All rights reserved.</p>
-        </div>
-      </footer>
     </Layout>
   );
 };

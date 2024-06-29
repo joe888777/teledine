@@ -13,6 +13,7 @@ import {
   sepolia,
 } from 'wagmi/chains';
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import customTheme from '../custom'; 
 
 const config = getDefaultConfig({
   appName: 'RainbowKit App',
@@ -34,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={client}>
-        <RainbowKitProvider>
+        <RainbowKitProvider theme={customTheme}> {/* 应用自定义主题 */}
           <Component {...pageProps} />
         </RainbowKitProvider>
       </QueryClientProvider>
