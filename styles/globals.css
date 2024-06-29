@@ -124,6 +124,7 @@ body {
   margin: 16px;
   padding: 0;
   color-scheme: var(--tg-color-scheme);
+  overflow-x: hidden;
 }
 
 a {
@@ -221,4 +222,11 @@ li {
   padding: 8px;
   background: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
+}
+
+footer {
+  color: #2d3748;
+  padding: 16px;
+  text-align: center;
+  width: 100%;
 }

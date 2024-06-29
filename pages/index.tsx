@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import Head from 'next/head';
 import Layout from '../componets/layout';
 import { useReadContract, useWaitForTransactionReceipt, useWriteContract, useAccount } from 'wagmi';
