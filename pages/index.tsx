@@ -4,6 +4,7 @@ import Head from 'next/head';
 import logo_icon from '../assets/images/logo.jpg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Layout from '../componets/layout';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <Head>
         <title>RainbowKit App</title>
         <meta
@@ -23,7 +24,7 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
 
-      <div>
+      {/* <div>
         <div className="container header-content">
           <div className="logo-container">
             <a href="#/" className="logo-link">
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
           </div>
           <ConnectButton />
         </div>
-      </div>
+      </div> */}
       <main>
         <div className="points-system">Points System</div>
         <h2>Choose The Restaurant !</h2>
@@ -50,7 +51,7 @@ const Home: NextPage = () => {
           <p>&copy; 2024 My Food Blog. All rights reserved.</p>
         </div>
       </footer>
-    </div>
+    </Layout>
   );
 };
 
