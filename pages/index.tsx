@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import Layout from '../componets/layout';
+import logo_icon from '../assets/images/logo.jpg';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
 
       <footer className="bg-gray-800 text-white p-4 mt-8">
         <div className="container mx-auto text-center">
-          <p>&copy; 2024 My Food Blog. All rights reserved.</p>
+          <p>&copy; 2024 TeleDine. All rights reserved.</p>
         </div>
       </footer>
     </Layout>
