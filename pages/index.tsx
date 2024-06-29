@@ -2,8 +2,67 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import logo_icon from '../assets/images/logo.jpg';
+import { useReadContract, useWaitForTransactionReceipt, useWriteContract, useAccount } from 'wagmi';
+
+import swapAbi from '../core/swap_abi.json';
+import erc20Abi from '../core/erc20_abi.json';
 import Image from 'next/image';
+
 const Home: NextPage = () => {
+  const { address, isConnected } = useAccount()
+  const { data: hash, isPending, writeContract } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    })
+
+  const targetAmount = 100000;
+
+  const _swapAmount = useReadContract({
+    abi: swapAbi,
+    address: '0x09f8cefc8afD01aFF85e0bcb7C426ed2692116B3',
+    functionName: 'getAmountIn',
+    args: [targetAmount]
+  })
+  console.log("swapAmount", _swapAmount.data);
+
+  const msleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const handleClick = async () => {
+    if (!address) {
+      console.log("address not ");
+      return;
+
+    } 
+    console.log("address", address);
+    writeContract({
+      address: '0x09f8cefc8afD01aFF85e0bcb7C426ed2692116B3',
+      abi: swapAbi,
+      functionName: 'swap',
+      args: [
+        '0x750ebea257a20F10217D46c914eea89094aa86d0',
+        BigInt(_swapAmount.data as any),
+      ],
+    })
+    for (;isConfirmed;) {
+      console.log("Pending...");
+      await msleep(1000);
+    }
+    alert(hash);
+  }
+
+  const handleApprove = async () => {
+    writeContract({
+      address: '0x657296a72483F8F330287B2F1E20293a2a2C2F52',
+      abi: erc20Abi,
+      functionName: 'approve',
+      args: [
+        address,
+        _swapAmount.data,
+      ],
+      account: address,
+    })
+  }
+
   return (
     <div>
       <Head>
@@ -24,6 +83,8 @@ const Home: NextPage = () => {
             <h1>TeleDine</h1>
           </div>
           <ConnectButton />
+          <button className="cute-button" onClick={handleClick}>Swap</button>
+          <button className="cute-button" onClick={handleApprove}>approve</button>
         </div>
       </div>
       <main>
