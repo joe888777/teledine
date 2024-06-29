@@ -3,7 +3,15 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import logo_icon from '../assets/images/logo.jpg';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const handleRestaurantClick = (restaurant: string) => {
+    router.push(`/restaurant/${restaurant}`);
+  };
+
   return (
     <div>
       <Head>
@@ -30,10 +38,10 @@ const Home: NextPage = () => {
         <div className="points-system">Points System</div>
         <h2>Choose The Restaurant !</h2>
         <div className="restaurant-grid">
-          <button className="restaurant-button" data-restaurant="A">餐廳 A</button>
-          <button className="restaurant-button" data-restaurant="B">餐廳 B</button>
-          <button className="restaurant-button" data-restaurant="C">餐廳 C</button>
-          <button className="restaurant-button" data-restaurant="D">餐廳 D</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('A')}>餐廳 A</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('B')}>餐廳 B</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('C')}>餐廳 C</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('D')}>餐廳 D</button>
         </div>
       </main>
 
