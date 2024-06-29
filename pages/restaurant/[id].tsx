@@ -15,6 +15,7 @@ const shortenAddress = (address: string) => {
 };
 
 const RestaurantPage = () => {
+    const [points, setPoints] = useState(15);
     const router = useRouter();
     const { id } = router.query;
     const [showToast, setShowToast] = useState(false);
@@ -25,6 +26,10 @@ const RestaurantPage = () => {
         setShowToast(true);
         setTimeout(() => setShowToast(false), 3000);
     };
+
+    const handleTLD = () => {
+        setPoints(0);
+    }
 
     if (!restaurant) {
         return <Layout><div>餐廳不存在</div></Layout>;
@@ -40,7 +45,7 @@ const RestaurantPage = () => {
                     <span>{shortenAddress(restaurant.address)}</span>
                     <button
                         onClick={handleCopyAddress}
-                        className="ml-2 px-2 py-1 bg-blue-500 text-white rounded text-sm"
+                        className="points-system"
                     >
                         複製
                     </button>
@@ -55,6 +60,17 @@ const RestaurantPage = () => {
                         <li key={index}>{dish}</li>
                     ))}
                 </ul>
+                <div className="mb-2">
+                    <strong>餐廳點數：</strong> {points} 點
+                    <div>
+                        <button
+                            onClick={handleTLD}
+                            className="points-system"
+                        >
+                            將此餐廳點數轉換為 $TLD
+                        </button>
+                    </div>
+                </div>
             </div>
             {showToast && <Toast message="錢包地址已複製" />}
         </Layout>

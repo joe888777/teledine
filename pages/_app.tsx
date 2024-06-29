@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={client}>
-        <RainbowKitProvider theme={customTheme}> {/* 应用自定义主题 */}
+        <RainbowKitProvider theme={customTheme}>
           <Component {...pageProps} />
         </RainbowKitProvider>
       </QueryClientProvider>
