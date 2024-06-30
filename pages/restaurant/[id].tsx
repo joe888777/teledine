@@ -61,6 +61,7 @@ const RestaurantPage = () => {
     };
 
     const handleTLD = () => {
+        setTimeout(() => setShowToast(false), 15);
         setPoints(0);
     }
 

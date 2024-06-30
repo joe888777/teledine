@@ -96,16 +96,13 @@ const Home: NextPage = () => {
       <main>
         {/* <button className="points-system" onClick={handleClick}>swap</button> */}
         {/* <button className="points-system" onClick={handleApprove}>approve</button> */}
-        <button className="points-system" onClick={handlePointsSystemClick}>
-        
-          My $TLD coins
-        </button>
+        <button className="points-system" onClick={handlePointsSystemClick}> My $TLD coins</button>
         <h2>Choose The Restaurant!</h2>
         <div className="restaurant-grid">
-          <button className="restaurant-button" onClick={() => handleRestaurantClick('A')}>餐廳 A</button>
-          <button className="restaurant-button" onClick={() => handleRestaurantClick('B')}>餐廳 B</button>
-          <button className="restaurant-button" onClick={() => handleRestaurantClick('C')}>餐廳 C</button>
-          <button className="restaurant-button" onClick={() => handleRestaurantClick('D')}>餐廳 D</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('A')}>義大利風味館</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('B')}>東洋食堂</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('C')}>墨西哥辣椒屋</button>
+          <button className="restaurant-button" onClick={() => handleRestaurantClick('D')}>綠色健康主義</button>
         </div>
       </main>
     </Layout>
