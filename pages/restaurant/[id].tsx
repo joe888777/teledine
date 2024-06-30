@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Layout from '../../componets/layout';
 import { useState } from 'react';
 import zircuitAbi from '../../core/zircuit_mint.json';
-import { useWriteContract, useWaitForTransaction } from 'wagmi';
+import { useWriteContract } from 'wagmi';
 import erc20Abi from '../../core/erc20_abi.json';
 import { useAccount } from 'wagmi';
 
