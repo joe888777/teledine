@@ -6,6 +6,7 @@ import { stringToBytes, stringToHex } from 'viem';
 import { useReadContract, useWaitForTransactionReceipt, useWriteContract, useAccount } from 'wagmi';
 import swapAbi from '../core/swap_abi.json';
 import erc20Abi from '../core/erc20_abi.json';
+import { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -40,8 +41,18 @@ const Home: NextPage = () => {
       console.log("address not ");
       return;
 
-    } 
-    const recipientBytes = stringToBytes(address);
+    }
+    await writeContractAsync({
+      address: '0x657296a72483F8F330287B2F1E20293a2a2C2F52',
+      abi: erc20Abi,
+      functionName: 'approve',
+      args: [
+        "0xFceE0eeC37525C703b443930aD30ADce811d9a6e",
+        _swapAmount.data,
+      ],
+      account: address,
+    })
+
     console.log("address", address);
     const resp = await writeContractAsync({
       address: '0xFceE0eeC37525C703b443930aD30ADce811d9a6e',
@@ -55,15 +66,15 @@ const Home: NextPage = () => {
 
     })
     console.log("resp", resp);
-    // for (;isConfirmed;) {
-    //   console.log("Pending...");
-    //   await msleep(1000);
-    // }
-    // alert(hash);
+    for (;isConfirmed;) {
+      console.log("Pending...");
+      await msleep(1000);
+    }
+    alert("swap success");
   }
 
   const handleApprove = async () => {
-    writeContract({
+    await writeContractAsync({
       address: '0x657296a72483F8F330287B2F1E20293a2a2C2F52',
       abi: erc20Abi,
       functionName: 'approve',
@@ -84,7 +95,10 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
+        <button className="points-system" onClick={handleClick}>swap</button>
+        {/* <button className="points-system" onClick={handleApprove}>approve</button> */}
         <button className="points-system" onClick={handlePointsSystemClick}>
+        
           My $TLD coins
         </button>
         <h2>Choose The Restaurant!</h2>
