@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Layout from '../componets/layout';
+import logo_icon from '../assets/images/logo.jpg';
+import { stringToBytes, stringToHex } from 'viem';
 import { useReadContract, useWaitForTransactionReceipt, useWriteContract, useAccount } from 'wagmi';
 import swapAbi from '../core/swap_abi.json';
 import erc20Abi from '../core/erc20_abi.json';
@@ -16,7 +18,7 @@ const Home: NextPage = () => {
     router.push(`/restaurant/${restaurant}`);
   };
   const { address, isConnected } = useAccount()
-  const { data: hash, isPending, writeContract } = useWriteContract()
+  const { data: hash, writeContract, writeContractAsync } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
@@ -26,7 +28,7 @@ const Home: NextPage = () => {
 
   const _swapAmount = useReadContract({
     abi: swapAbi,
-    address: '0x09f8cefc8afD01aFF85e0bcb7C426ed2692116B3',
+    address: '0xFceE0eeC37525C703b443930aD30ADce811d9a6e',
     functionName: 'getAmountIn',
     args: [targetAmount]
   })
@@ -39,21 +41,25 @@ const Home: NextPage = () => {
       return;
 
     } 
+    const recipientBytes = stringToBytes(address);
     console.log("address", address);
-    writeContract({
-      address: '0x09f8cefc8afD01aFF85e0bcb7C426ed2692116B3',
+    const resp = await writeContractAsync({
+      address: '0xFceE0eeC37525C703b443930aD30ADce811d9a6e',
       abi: swapAbi,
       functionName: 'swap',
       args: [
-        '0x750ebea257a20F10217D46c914eea89094aa86d0',
-        BigInt(_swapAmount.data as any),
+        _swapAmount.data,
+        address,
       ],
+      account: address,
+
     })
-    for (;isConfirmed;) {
-      console.log("Pending...");
-      await msleep(1000);
-    }
-    alert(hash);
+    console.log("resp", resp);
+    // for (;isConfirmed;) {
+    //   console.log("Pending...");
+    //   await msleep(1000);
+    // }
+    // alert(hash);
   }
 
   const handleApprove = async () => {
@@ -62,7 +68,7 @@ const Home: NextPage = () => {
       abi: erc20Abi,
       functionName: 'approve',
       args: [
-        address,
+        "0xFceE0eeC37525C703b443930aD30ADce811d9a6e",
         _swapAmount.data,
       ],
       account: address,
