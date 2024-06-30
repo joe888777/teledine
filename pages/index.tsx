@@ -63,7 +63,6 @@ const Home: NextPage = () => {
         address,
       ],
       account: address,
-
     })
     console.log("resp", resp);
     for (;isConfirmed;) {
@@ -95,7 +94,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <button className="points-system" onClick={handleClick}>swap</button>
+        {/* <button className="points-system" onClick={handleClick}>swap</button> */}
         {/* <button className="points-system" onClick={handleApprove}>approve</button> */}
         <button className="points-system" onClick={handlePointsSystemClick}>
         

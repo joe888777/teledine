@@ -4,7 +4,9 @@ import Image from 'next/image';
 import Layout from '../../componets/layout';
 import { useState } from 'react';
 import zircuitAbi from '../../core/zircuit_mint.json';
-
+import { useWriteContract, useWaitForTransaction } from 'wagmi';
+import erc20Abi from '../../core/erc20_abi.json';
+import { useAccount } from 'wagmi';
 
 const Toast = ({ message }: { message: string }) => (
     <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
@@ -23,6 +25,35 @@ const RestaurantPage = () => {
     const [showToast, setShowToast] = useState(false);
     const restaurantId = typeof id === 'string' ? id : '';
     const restaurant = restaurants[restaurantId as keyof typeof restaurants];
+    const { writeContractAsync} = useWriteContract();
+    const { address } = useAccount();
+
+    const handlePay = async () => {
+        await writeContractAsync({
+            address: '0x7A685946B5d7673e5AB18bDd1471979fd133e909',
+            abi: erc20Abi,
+            functionName: 'approve',
+            args: [
+              "0xFceE0eeC37525C703b443930aD30ADce811d9a6e",
+              10000,
+            ],
+            account: address,
+          });
+        await writeContractAsync({
+            address: '0x7A685946B5d7673e5AB18bDd1471979fd133e909',
+            abi: erc20Abi,
+            functionName: 'transfer',
+            args: [
+              "0xA49148D06399Af2A95bd873320222eC974D5C6F7",
+              10000,
+            ],
+            account: address,
+          });
+        setTimeout(() => {
+            alert("付款成功");
+        }, 30000);
+        
+    }
     const handleCopyAddress = () => {
         navigator.clipboard.writeText(restaurant.address);
         setShowToast(true);
@@ -51,6 +82,7 @@ const RestaurantPage = () => {
                     >
                         複製
                     </button>
+                    <button className="points-system" onClick={handlePay}>付款</button>
                 </div>
                 <p className="mb-2"><strong>類型：</strong> {restaurant.cuisine}</p>
                 <p className="mb-2"><strong>評分：</strong> {restaurant.rating} / 5</p>
